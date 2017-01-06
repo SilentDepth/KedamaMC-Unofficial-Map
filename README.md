@@ -1,6 +1,6 @@
 # 毛玉線圈物語 Sunshine (v2) 主世界非官方地图
 
-入口：[https://silentdepth.github.io/KedamaMC-Unofficial-Map/]()
+入口：[https://silentdepth.github.io/KedamaMC-Unofficial-Map/](https://silentdepth.github.io/KedamaMC-Unofficial-Map/)
 
 **非官方**，嗯……
 
