@@ -19,9 +19,10 @@
 
   function addMarker(x, y, icon, title) {
     var marker = new google.maps.Marker({
+      position: new google.maps.LatLng((y + .5) / 256, (x + .5) / 256),
       map: map,
       icon: icon,
-      title: title + " (" + x + ", " + y + ")"
+      title: title + "\n(" + x + ", " + y + ")"
     });
     markerArray.push(marker);
   }
