@@ -24,5 +24,12 @@ var markers = [
   {x: 642, z: 548, title: '荒村'},
   {x: 785, z: 606, title: 'WitheringNight\'s'},
   {x: 869, z: 366, title: 'nihui\'s?'},
-  {x: -108, z: -255, y: 48, title: '僵尸刷怪笼'}
+  {x: -108, z: -255, y: 48, title: '僵尸刷怪笼'},
+  {x: -598, z: -341, y: 71, title: 'HY_HuanYao\'s'},
+  {x: 283, z: -1301, y: 76, title: 'Always_U\'s'},
+  {x: -267, z: -1020, y: 75, title: 'Budun\'s'},
+  {x: -2765, z: -2844, y: 64, title: '海底神殿'},
+  {x: -1170, z: 1058, title: '末地传送门'},
+  {x: 3700, z: -700, y: 64, title: '海底神殿'},
+  {x: 124, z: -243, title: '僵尸刷怪笼'}
 ];
