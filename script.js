@@ -91,7 +91,7 @@ function initialize() {
       return 'Overworld/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
     },
     tileSize: new google.maps.Size(256, 256), // size of image.  their native size to display 1 to 1
-    maxZoom: 7,
+    maxZoom: 6,
     minZoom: 0,
     name: 'Overworld'
   });
