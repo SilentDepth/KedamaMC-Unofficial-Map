@@ -35,5 +35,7 @@ var markers = [
   {x: 294, z: -63, y: 69, title: 'BlueMKY\'s'},
   {x: 383, z: 6, y: 68, title: 'storm_Blues\''},
   {x: 311, z: -227, y: 73, title: 'Vladimir503\'s'},
-  {x: 247, z: -229, y: 56, title: 'Xuha\'s'}
+  {x: 247, z: -229, y: 56, title: 'Xuha\'s'},
+  {x: -1964, z: -572, y: 69, title: 'ONEMOON\'s'},
+  {x: -2147, z: 220, y: 63, title: 'qumingjam\'s'}
 ];
