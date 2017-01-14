@@ -37,5 +37,8 @@ var markers = [
   {x: 311, z: -227, y: 73, title: 'Vladimir503\'s'},
   {x: 247, z: -229, y: 56, title: 'Xuha\'s'},
   {x: -1964, z: -572, y: 69, title: 'ONEMOON\'s'},
-  {x: -2147, z: 220, y: 63, title: 'qumingjam\'s'}
+  {x: -2147, z: 220, y: 63, title: 'qumingjam\'s'},
+  {title: 'AqIu_\'s', x: -162, z: -907, y: 78},
+  {title: '海底神殿', x: -1182, z: -3910, y: 62},
+  {title: 'Tiande\'s', x: 250, z: -2165, y: 76}
 ];

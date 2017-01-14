@@ -5,20 +5,25 @@ html, body {
   height: 100%;
 }
 
-h4 {
-  margin: 10px;
-  line-height: 1;
+.header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  text-align: center;
-  text-shadow: 0 0 6px #000;
-  color: #FFF;
   z-index: 1;
+  width: 100%;
+  height: 0;
+  text-align: center;
 }
 
-h4 em {
+.header h4 {
+  display: inline-block;
+  margin: 10px;
+  line-height: 1;
+  text-shadow: 0 0 6px #000;
+  color: #FFF;
+}
+
+.header h4 em {
   font-weight: normal;
   font-style: normal;
   line-height: 2;

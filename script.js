@@ -78,30 +78,42 @@ function initialize() {
     panControl: false,
     scaleControl: false,
     mapTypeControlOptions: {
-      mapTypeIds: ['overworld']
+      mapTypeIds: ['voxelmap', 'journeymap']
     }
   };
 
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
   // can define multiple mapTypes (similar to how standard google maps has satellite, map, hybrid).
-  var mapTypeOverworld = new google.maps.ImageMapType({
+  var mapTypeOverworldVM = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
       var z = Math.pow(2, zoom - 4);
-      return 'Overworld/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
+      return 'tiles/voxelmap/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
     },
     tileSize: new google.maps.Size(256, 256), // size of image.  their native size to display 1 to 1
     maxZoom: 6,
     minZoom: 0,
-    name: 'Overworld'
+    name: 'Minecraft 风格'
+  });
+  var mapTypeOverworldJM = new google.maps.ImageMapType({
+    getTileUrl: function (coord, zoom) {
+      var z = Math.pow(2, zoom - 4);
+      return 'tiles/journeymap/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
+    },
+    tileSize: new google.maps.Size(512, 512), // size of image.  their native size to display 1 to 1
+    maxZoom: 6,
+    minZoom: 0,
+    name: 'JourneyMap 风格'
   });
 
   // use the custom latitude and logitude projection
-  mapTypeOverworld.projection = new ProjectionCartesian();
+  mapTypeOverworldVM.projection = new ProjectionCartesian();
+  mapTypeOverworldJM.projection = new ProjectionCartesian();
 
   // add the map type to the map
-  map.mapTypes.set('overworld', mapTypeOverworld);
-  map.setMapTypeId('overworld');
+  map.mapTypes.set('voxelmap', mapTypeOverworldVM);
+  map.mapTypes.set('journeymap', mapTypeOverworldJM);
+  map.setMapTypeId('voxelmap');
 
   // listener for clicks on the map surface
   google.maps.event.addListener(map, 'rightclick', function (event) {
