@@ -40,5 +40,12 @@ var markers = [
   {x: -2147, z: 220, y: 63, title: 'qumingjam\'s'},
   {title: 'AqIu_\'s', x: -162, z: -907, y: 78},
   {title: '海底神殿', x: -1182, z: -3910, y: 62},
-  {title: 'Tiande\'s', x: 250, z: -2165, y: 76}
+  {title: 'Tiande\'s', x: 250, z: -2165, y: 76},
+  {title: "未知传送门", x: -719, z: 325, y: 64, icon: iconPortal},
+  {title: "雪屋", x: -3953, z: -957, y: 65},
+  {title: "An_black's", x: 94, z: 1077, y: 72},
+  {title: "砂砾山", x: 217, z: 919, y: 74},
+  {title: "未知传送门", x: 297, z: 808, y: 70, icon: iconPortal},
+  {title: "lilydjwg's", x: -107, z: -225, y: 70},
+  {title: "Physical_Hider's", x: -41, z: -348, y: 64}
 ];
