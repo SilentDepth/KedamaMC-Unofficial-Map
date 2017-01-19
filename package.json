@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "jimp": "^0.2.27"
+  },
+  "scripts": {
+    "process": "node src/index.js tiles/journeymap/images/z1 tiles/journeymap_night/images/z1 tiles/journeymap_topo/images/z1 tiles/voxelmap/images/z1"
   }
 }
