@@ -2,10 +2,54 @@
 
 const fs = require('fs');
 const path = require('path');
+const fork = require('child_process').fork;
 
 const Jimp = require('jimp');
 
-const RE_COORDS = /^((-?\d+),(-?\d+))/;
+const utils = require('./utils');
+
+const config = {
+  MIN_ZOOM: 4,
+  MAX_ZOOM: 2,
+  BUNCH_SIZE: 50,
+};
+
+function start() {
+  const z1Locations = parseArgv();
+  let activeChildCount = 0;
+
+  z1Locations.forEach(location => {
+    const args = [`z1=${location}`, `config=${JSON.stringify(config)}`];
+    const childProc = fork('./src/processor', args);
+    activeChildCount++;
+    childProc.on('close', code => {
+      activeChildCount--;
+      console.log(code, activeChildCount);
+    });
+  });
+}
+
+function parseArgv() {
+  const locations = [];
+
+  process.argv.slice(2).forEach(el => {
+    let [key, val] = el.split('=');
+    switch (key) {
+      case 'max':
+        config.MAX_ZOOM = +val;
+        break;
+      case 'min':
+        config.MIN_ZOOM = +val;
+        break;
+      default:
+        if (val === void 0) {
+          locations.push(key);
+        }
+    }
+  });
+
+  return locations;
+}
 
 function proc(z1Location) {
   let z1Filenames = fs.readdirSync(z1Location);
@@ -13,37 +57,6 @@ function proc(z1Location) {
   let extname = path.extname(z1Filenames[0]);
   let z1Images = {};
   let tileSize;
-
-  function zoomOut(map) {
-    let canvas = new Jimp(tileSize * 2, tileSize * 2);
-    Reflect.ownKeys(map).forEach(coord => {
-      const [dx, dz] = RE_COORDS.exec(coord).slice(2).map(el => +el);
-      canvas.blit(map[coord], dx * tileSize, dz * tileSize);
-    });
-    canvas.resize(tileSize, tileSize, Jimp.RESIZE_BEZIER);
-    return canvas;
-  }
-
-  function zoomIn(image) {
-    let canvas = new Jimp(tileSize * 2, tileSize * 2);
-    image.scan(0, 0, tileSize, tileSize, (x, y) => {
-      [
-        {x2: x * 2, y2: y * 2},
-        {x2: x * 2 + 1, y2: y * 2},
-        {x2: x * 2, y2: y * 2 + 1},
-        {x2: x * 2 + 1, y2: y * 2 + 1}
-      ].forEach(coord => {
-        canvas.setPixelColor(image.getPixelColor(x, y), coord.x2, coord.y2);
-      });
-    });
-
-    return {
-      '0,0': canvas.clone().crop(0, 0, tileSize, tileSize),
-      '1,0': canvas.clone().crop(tileSize, 0, tileSize, tileSize),
-      '0,1': canvas.clone().crop(0, tileSize, tileSize, tileSize),
-      '1,1': canvas.clone().crop(tileSize, tileSize, tileSize, tileSize)
-    };
-  }
 
   Promise.all(z1Coords.map(coord =>
     Jimp.read(path.resolve(z1Location, coord + extname)).then(image => {
@@ -58,7 +71,7 @@ function proc(z1Location) {
     let phasePromise = Promise.resolve(z1Images);
 
     new Array(config.MIN_ZOOM + 1).join('-').split('').map((el, idx) => 1 / Math.pow(2, idx + 1)).forEach(zoom => {
-      prepareDir(z1Location, zoom);
+      utils.prepareZoomDir(z1Location, zoom);
 
       phasePromise = phasePromise.then(lastProcessed => {
         console.log('processing', zoom);
@@ -128,43 +141,4 @@ function proc(z1Location) {
   });
 }
 
-function throwErr(err) {
-  throw err;
-}
-
-function prepareDir(z1Location, zoom) {
-  let zoomDir = path.resolve(z1Location, `../z${zoom}`);
-  try {
-    fs.accessSync(zoomDir);
-  } catch (e) {
-    if (e.code === 'ENOENT') {
-      fs.mkdirSync(zoomDir);
-    } else throw e;
-  }
-}
-
-const config = {
-  MIN_ZOOM: 4,
-  MAX_ZOOM: 2
-};
-const z1Locations = [];
-
-process.argv.slice(2).forEach(el => {
-  let [key, val] = el.split('=');
-  switch (key) {
-    case 'max':
-      config.MAX_ZOOM = +val;
-      break;
-    case 'min':
-      config.MIN_ZOOM = +val;
-      break;
-    default:
-      if (val === void 0) {
-        z1Locations.push(key);
-      }
-  }
-});
-
-z1Locations.forEach(location => {
-  proc(location);
-});
+start();
