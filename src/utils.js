@@ -61,4 +61,12 @@ module.exports = {
       } else throw e;
     }
   },
+
+  makeArray(length) {
+    return new Array(length + 1).join('.').split('').map((el, idx) => idx);
+  },
+
+  parseCoord(coordStr) {
+    return this.RE_COORD.exec(coordStr).slice(1).map(s => +s);
+  },
 };
