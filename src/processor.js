@@ -20,7 +20,7 @@ const {config, z1Location} = {
 console.log(`[PID ${process.pid}] processing ${z1Location}`);
 
 const [z1Coords, extname] = (() => {
-  let filenames = fs.readdirSync(z1Location);
+  let filenames = fs.readdirSync(z1Location).filter(filename => utils.RE_FORMAT.test(filename));
   let extname = path.extname(filenames[0]);
   let coords = filenames.map(filename => path.basename(filename, extname));
   return [coords, extname];
@@ -61,7 +61,7 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
         const coord2Bunch = coords2.slice(idx * bunchSize, (idx + 1) * config.BUNCH_SIZE);
 
         return Promise.all(coord2Bunch.map(coord2 => {
-          let m = map[coord2];
+          let m = JSON.parse(JSON.stringify(map[coord2]));
 
           return Promise.all(Reflect.ownKeys(m).map(pos => {
             let filepath = path.resolve(z1Location, `../z${zoom * 2}/${m[pos]}${extname}`);
@@ -69,7 +69,7 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
             return Jimp.read(filepath).then(image => {
               m[pos] = image;
             }).catch(e => {
-              console.error(`error occurs when reading ${filepath}. (${e})`);
+              console.error(`error occurs while reading ${filepath}. (${e.message || e})`);
             });
           })).then(() => {
             return new Promise(resolve => {
@@ -80,8 +80,10 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
       });
     });
 
-    console.log(`[${z1Location}] level ${zoom} processed`);
-    return stepPromise.then(() => coords2);
+    return stepPromise.then(() => {
+      console.log(`[${z1Location}] level ${zoom} processed`);
+      return coords2;
+    });
   });
 });
 
@@ -122,17 +124,20 @@ utils.makeArray(config.MAX_ZOOM).forEach(idx => {
               });
             }));
           }).catch(e => {
-            console.error(`error occurs when reading ${filepath}. (${e})`);
+            console.error(`error occurs while reading ${filepath}. (${e.message || e})`);
           });
         }));
       });
     });
 
-    console.log(`[${z1Location}] level ${zoom} processed`);
-    return stepPromise.then(() => coords2);
+    return stepPromise.then(() => {
+      console.log(`[${z1Location}] level ${zoom} processed`);
+      return coords2;
+    });
   });
 });
 
 promise = promise.then(() => {
   console.log(`${z1Location} done`);
+  process.exit();
 });

@@ -77,6 +77,7 @@ function initialize() {
     zoomControl: true,
     panControl: false,
     scaleControl: false,
+    backgroundColor: '#000',
     mapTypeControlOptions: {
       mapTypeIds: ['voxelmap', 'journeymap', 'journeymap_night', 'journeymap_topo']
     }

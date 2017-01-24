@@ -6,9 +6,11 @@ const fs = require('fs');
 const Jimp = require('jimp');
 
 const RE_COORD = /^(-?\d+),(-?\d+)/;
+const RE_FORMAT = /\.(png|bmp|jpg|jpeg)$/i;
 
 module.exports = {
-  RE_COORD: RE_COORD,
+  RE_COORD,
+  RE_FORMAT,
 
   zoomOut(map) {
     let tileSize = null;
