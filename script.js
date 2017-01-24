@@ -102,8 +102,8 @@ function initialize() {
       return 'tiles/journeymap/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
     },
     tileSize: new google.maps.Size(512, 512), // size of image.  their native size to display 1 to 1
-    maxZoom: 5,
-    minZoom: 4,
+    maxZoom: 6,
+    minZoom: 0,
     name: 'JourneyMap 风格'
   });
   var mapTypeOverworldJMN = new google.maps.ImageMapType({
