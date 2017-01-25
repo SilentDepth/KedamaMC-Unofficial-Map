@@ -4,7 +4,7 @@
 
 地图入口：[https://silentdepth.github.io/KedamaMC-Unofficial-Map/](https://silentdepth.github.io/KedamaMC-Unofficial-Map/)
 
-Wiki入口：[https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki](https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki)
+Wiki入口：[https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki/%E9%9D%9E%E5%AE%98%E6%96%B9Wiki](https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki/%E9%9D%9E%E5%AE%98%E6%96%B9Wiki)
 
 ## FAQ
 
