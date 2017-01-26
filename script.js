@@ -112,8 +112,8 @@ function initialize() {
       return 'tiles/journeymap_night/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
     },
     tileSize: new google.maps.Size(512, 512), // size of image.  their native size to display 1 to 1
-    maxZoom: 5,
-    minZoom: 4,
+    maxZoom: 6,
+    minZoom: 0,
     name: '夜间风格'
   });
   var mapTypeOverworldJMT = new google.maps.ImageMapType({
@@ -122,8 +122,8 @@ function initialize() {
       return 'tiles/journeymap_topo/images/z' + z + '/' + coord.x + ',' + coord.y + '.png';
     },
     tileSize: new google.maps.Size(512, 512), // size of image.  their native size to display 1 to 1
-    maxZoom: 5,
-    minZoom: 4,
+    maxZoom: 6,
+    minZoom: 0,
     name: '等高线风格'
   });
 

@@ -7,15 +7,7 @@ const Jimp = require('jimp');
 
 const utils = require('./utils');
 
-// const {config, z1Location} = JSON.parse(process.argv.slice(2)[0]);
-const {config, z1Location} = {
-  z1Location: '../tiles/journeymap/images/z1',
-  config: {
-    MIN_ZOOM: 4,
-    MAX_ZOOM: 2,
-    BUNCH_SIZE: 50
-  }
-};
+const {config, z1Location} = JSON.parse(process.argv.slice(2)[0]);
 
 console.log(`[PID ${process.pid}] processing ${z1Location}`);
 
@@ -138,6 +130,6 @@ utils.makeArray(config.MAX_ZOOM).forEach(idx => {
 });
 
 promise = promise.then(() => {
-  console.log(`${z1Location} done`);
+  console.log(`[${z1Location}] done`);
   process.exit();
 });

@@ -4,8 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const fork = require('child_process').fork;
 
-const Jimp = require('jimp');
-
 const utils = require('./utils');
 
 const config = {
@@ -16,19 +14,13 @@ const config = {
 
 function start() {
   const z1Locations = parseArgv();
-  let activeChildCount = 0;
 
   z1Locations.forEach(z1Location => {
     const args = {
       config,
       z1Location,
     };
-    const childProc = fork('./src/processor', [JSON.stringify(args)]);
-    activeChildCount++;
-    childProc.on('close', code => {
-      activeChildCount--;
-      console.log(code, activeChildCount);
-    });
+    fork('./src/processor', [JSON.stringify(args)]);
   });
 }
 
