@@ -8,6 +8,12 @@ Wiki入口：[https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki/%E9%9D
 
 ## FAQ
 
+- **地图什么也没显示出来！**
+
+  可能是Google Maps API被你的网络拦住了，在右上角的「API源」菜单里换一个试试。
+  
+  **声明**：切换一次API源后此设定会被储存在LocalStorage。如果你不明白什么是LocalStorage，你可以忽略本声明。
+
 - **为什么地图只有v2主世界的？**
 
   因为我几乎不在v1活动，也还没有在下界开始活动……
