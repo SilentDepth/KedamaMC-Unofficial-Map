@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>KedamaMC Unofficial Map</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/es5-shim/es5-shim.min.js"></script>
+  <script src="script.js"></script>
+  <script src="markers.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <h4>毛玉線圈物語 Sunshine (v2) 主世界非官方地图<br><em>点击右键显示/隐藏标注</em></h4>
+  </div>
+  <div id="api-src">
+    <h5>API源</h5>
+    <ul id="api-src-list">
+      <li><a href="javascript:" data-id="GOOGLEAPIS">googleapis.com</a></li>
+      <li><a href="javascript:" data-id="GOOGLECN">google.cn</a></li>
+    </ul>
+  </div>
+  <div id="map_canvas"></div>
+
+  <script>
+    var API_SRC_MAP = {
+      GOOGLEAPIS: 'https://maps.googleapis.com/maps/api/js?',
+      GOOGLECN: 'https://maps.google.cn/maps/api/js?'
+    };
+    var API_KEY = 'AIzaSyA_FrfIceV_JYILsYCShrVo50r3HE7yvBw';
+    var CALLBACK = 'initialize';
+
+    var apiSrc = localStorage.apiSrc || 'GOOGLEAPIS';
+    var $apiSrcList = document.getElementById('api-src-list');
+
+    var $apiScript = document.createElement('script');
+    $apiScript.src = API_SRC_MAP[apiSrc] + 'key=' + API_KEY + '&callback=' + CALLBACK;
+    document.body.insertBefore($apiScript, null);
+
+    var $currApiSrc = $apiSrcList.querySelector('[data-id=' + apiSrc + ']');
+    $currApiSrc.innerText = '◆ ' + $currApiSrc.innerText;
+    document.getElementById('api-src-list').addEventListener('click', changeApiSrc);
+  </script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-82103573-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+
+</html>
