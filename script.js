@@ -134,8 +134,8 @@ function initialize() {
   map.mapTypes.set('voxelmap', mapTypeOverworldVM);
   map.mapTypes.set('journeymap', mapTypeOverworldJM);
   map.mapTypes.set('journeymap_night', mapTypeOverworldJMN);
-  map.mapTypes.set('journeymap_topo', mapTypeOverworldJMT);
-  map.setMapTypeId('voxelmap');
+  // map.mapTypes.set('journeymap_topo', mapTypeOverworldJMT);
+  map.setMapTypeId('journeymap');
 
   // listener for clicks on the map surface
   google.maps.event.addListener(map, 'rightclick', function (event) {
