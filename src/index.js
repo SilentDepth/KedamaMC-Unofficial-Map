@@ -9,7 +9,7 @@ const utils = require('./utils');
 const config = {
   MIN_ZOOM: 4,
   MAX_ZOOM: 2,
-  BUNCH_SIZE: 50,
+  BUNCH_SIZE: 100,
 };
 
 function start() {
@@ -20,7 +20,7 @@ function start() {
       config,
       z1Location,
     };
-    fork('./src/processor', [JSON.stringify(args)]);
+    fork(path.resolve(process.argv[1], '../processor'), [JSON.stringify(args)]);
   });
 }
 
