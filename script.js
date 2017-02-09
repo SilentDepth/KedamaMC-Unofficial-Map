@@ -153,7 +153,7 @@ function initialize() {
     addMarker(m);
   });
 
-  $coordInput = document.querySelector('#coord input');
+  $coordInput = document.querySelector('#coord');
   map.addListener('mousemove', function (ev) {
     var x = Math.round(ev.latLng.lng() * 256);
     var z = Math.round(ev.latLng.lat() * 256);
