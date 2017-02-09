@@ -47,13 +47,13 @@ var markers = [
   {title: "未知传送门", x: 297, z: 808, y: 70, icon: iconPortal},
   {title: "lilydjwg's", x: -107, z: -225, y: 70},
   {title: "Physical_Hider's", x: -41, z: -348, y: 64},
-  {name: 'Zizi_Y\'s', x: -88, z: -925, y: 63},
-  {name: 'toastbread\'s', x: -162, z: -937, y: 78},
-  {name: 'Yukari_Nya\'s', x: -182, z: -879, y: 70},
-  {name: 'lyhyu__yi\'s', x: -209, z: -893, y: 72},
-  {name: '未知传送门', x: 2258, z: 53, y: 64, icon: iconPortal},
-  {name: 'sophist_Jun & _NR\'s', x: 3435, z: 1565, y: 54},
-  {name: '未知传送门', x: 598, z: 841, y: 75, icon: iconPortal},
-  {name: 'JZZ_233 & wzhgbb\'s', x: 905, z: 399, y: 65},
-  {name: 'GeneralStarfish\'s?', x: 704, z: 56, y: 64}
+  {title: 'Zizi_Y\'s', x: -88, z: -925, y: 63},
+  {title: 'toastbread\'s', x: -162, z: -937, y: 78},
+  {title: 'Yukari_Nya\'s', x: -182, z: -879, y: 70},
+  {title: 'lyhyu__yi\'s', x: -209, z: -893, y: 72},
+  {title: '未知传送门', x: 2258, z: 53, y: 64, icon: iconPortal},
+  {title: 'sophist_Jun & _NR\'s', x: 3435, z: 1565, y: 54},
+  {title: '未知传送门', x: 598, z: 841, y: 75, icon: iconPortal},
+  {title: 'JZZ_233 & wzhgbb\'s', x: 905, z: 399, y: 65},
+  {title: 'GeneralStarfish\'s?', x: 704, z: 56, y: 64}
 ];

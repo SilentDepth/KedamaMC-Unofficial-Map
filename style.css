@@ -64,3 +64,23 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+#coord {
+  position: fixed;
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+#coord input {
+  border: none;
+  background: rgba(0,0,0,.5);
+  color: #FFF;
+  font-size: 12px;
+  height: 1.5em;
+  padding: 0 .25em;
+  width: 100px;
+  text-align: center;
+  borde-radius: 3px;
+}

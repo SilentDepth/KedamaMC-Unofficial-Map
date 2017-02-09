@@ -1,14 +1,21 @@
+'use strict';
+
 var markerArray = [];
 var map = null;
 var markerVisibility = true;
 var iconSpawn;
 var iconPortal;
+var $coordInput;
 
 // functions to add, hide, and delete markers
 
+function projectMarker(m) {
+  return new google.maps.LatLng((m.z + .5) / 256, (m.x + .5) / 256);
+}
+
 function addMarker(m) {
   var marker = new google.maps.Marker({
-    position: new google.maps.LatLng((m.z + .5) / 256, (m.x + .5) / 256),
+    position: projectMarker(m),
     map: map,
     icon: m.icon || iconSpawn,
     title: m.title + "\n(" + m.x + ", " + (m.y !== void 0 ? m.y + ', ' : '') + m.z + ")"
@@ -144,6 +151,13 @@ function initialize() {
 
   markers.forEach(function (m) {
     addMarker(m);
+  });
+
+  $coordInput = document.querySelector('#coord input');
+  map.addListener('mousemove', function (ev) {
+    var x = Math.round(ev.latLng.lng() * 256);
+    var z = Math.round(ev.latLng.lat() * 256);
+    $coordInput.value = x + ' , ' + z;
   });
 }
 
