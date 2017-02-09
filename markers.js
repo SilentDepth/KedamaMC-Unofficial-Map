@@ -1,4 +1,4 @@
-var markers = [
+var markerData = [
   {x: 2, z: 11, title: '世界出生点'},
   {x: 411, z: -109, title: '奶油芒果蛋糕'},
   {x: 250, z: -64, title: 'Fly_Goat的小屋'},
@@ -41,19 +41,19 @@ var markers = [
   {title: 'AqIu_\'s', x: -162, z: -907, y: 78},
   {title: '海底神殿', x: -1182, z: -3910, y: 62},
   {title: 'Tiande\'s', x: 250, z: -2165, y: 76},
-  {title: "未知传送门", x: -719, z: 325, y: 64, icon: iconPortal},
+  {title: "未知传送门", x: -719, z: 325, y: 64, type: 'portal'},
   {title: "An_black's", x: 94, z: 1077, y: 72},
   {title: "砂砾山", x: 217, z: 919, y: 74},
-  {title: "未知传送门", x: 297, z: 808, y: 70, icon: iconPortal},
+  {title: "未知传送门", x: 297, z: 808, y: 70, type: 'portal'},
   {title: "lilydjwg's", x: -107, z: -225, y: 70},
   {title: "Physical_Hider's", x: -41, z: -348, y: 64},
   {title: 'Zizi_Y\'s', x: -88, z: -925, y: 63},
   {title: 'toastbread\'s', x: -162, z: -937, y: 78},
   {title: 'Yukari_Nya\'s', x: -182, z: -879, y: 70},
   {title: 'lyhyu__yi\'s', x: -209, z: -893, y: 72},
-  {title: '未知传送门', x: 2258, z: 53, y: 64, icon: iconPortal},
+  {title: '未知传送门', x: 2258, z: 53, y: 64, type: 'portal'},
   {title: 'sophist_Jun & _NR\'s', x: 3435, z: 1565, y: 54},
-  {title: '未知传送门', x: 598, z: 841, y: 75, icon: iconPortal},
+  {title: '未知传送门', x: 598, z: 841, y: 75, type: 'portal'},
   {title: 'JZZ_233 & wzhgbb\'s', x: 905, z: 399, y: 65},
   {title: 'GeneralStarfish\'s?', x: 704, z: 56, y: 64}
 ];
