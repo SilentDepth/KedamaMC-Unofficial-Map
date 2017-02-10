@@ -4,8 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const fork = require('child_process').fork;
 
-const utils = require('./utils');
-
 const config = {
   MIN_ZOOM: 4,
   MAX_ZOOM: 2,

@@ -81,7 +81,7 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
 
 // 放大
 
-promise = promise.then(z1Coords);
+promise = promise.then(() => z1Coords);
 
 // 遍历缩放等级
 utils.makeArray(config.MAX_ZOOM).forEach(idx => {
