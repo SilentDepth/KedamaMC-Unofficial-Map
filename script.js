@@ -55,6 +55,8 @@ function initialize() {
   });
 
   bindEvents();
+
+  enableManage();
 }
 
 function ProjectionCartesian() {}
