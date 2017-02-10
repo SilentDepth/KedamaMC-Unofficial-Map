@@ -6,24 +6,36 @@ const path = require('path');
 const Jimp = require('jimp');
 
 const utils = require('./utils');
+const taskConfig = require('./task.config');
 
-const {config, z1Location} = JSON.parse(process.argv.slice(2)[0]);
+// const _dirArg = JSON.parse(process.argv[2]);
+const _dirArg = JSON.parse('{"from":"E:/Repo/kedamamc-unofficial-map/test/from","to":"E:/Repo/kedamamc-unofficial-map/test/to - 副本"}');
+let z1Location;
+let z1Coords;
+let extname;
+let promise;
+
+if (typeof _dirArg === 'object') {
+  z1Location = _dirArg.to;
+  promise = utils.sync(_dirArg.from, _dirArg.to).then(files => {
+    extname = path.extname(files[0]);
+    z1Coords = files.map(file => path.basename(file, extname));
+  }).catch(err => console.log(err));
+} else {
+  z1Location = _dirArg;
+  let filenames = fs.readdirSync(z1Location).filter(filename => utils.RE_FORMAT.test(filename));
+  extname = path.extname(filenames[0]);
+  z1Coords = filenames.map(filename => path.basename(filename, extname));
+}
 
 console.log(`[PID ${process.pid}] processing ${z1Location}`);
 
-const [z1Coords, extname] = (() => {
-  let filenames = fs.readdirSync(z1Location).filter(filename => utils.RE_FORMAT.test(filename));
-  let extname = path.extname(filenames[0]);
-  let coords = filenames.map(filename => path.basename(filename, extname));
-  return [coords, extname];
-})();
-
 // 缩小
 
-let promise = Promise.resolve(z1Coords);
+promise = promise.then(() => z1Coords);
 
 // 缩放等级遍历
-utils.makeArray(config.MIN_ZOOM).forEach(idx => {
+utils.makeArray(taskConfig.minZoom).forEach(idx => {
   const zoom = 1 / Math.pow(2, idx + 1);
 
   utils.prepareZoomDir(z1Location, zoom);
@@ -44,13 +56,13 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
     }, {});
   }).then(map => {
     const coords2 = Reflect.ownKeys(map);
-    const bunchSize = Math.floor(config.BUNCH_SIZE / 4);
+    const bunchSize = Math.floor(taskConfig.bunchSize / 4);
 
     let stepPromise = Promise.resolve();
 
     utils.makeArray(Math.ceil(coords2.length / bunchSize)).forEach(idx => {
       stepPromise = stepPromise.then(() => {
-        const coord2Bunch = coords2.slice(idx * bunchSize, (idx + 1) * config.BUNCH_SIZE);
+        const coord2Bunch = coords2.slice(idx * bunchSize, (idx + 1) * taskConfig.bunchSize);
 
         return Promise.all(coord2Bunch.map(coord2 => {
           let m = JSON.parse(JSON.stringify(map[coord2]));
@@ -84,14 +96,14 @@ utils.makeArray(config.MIN_ZOOM).forEach(idx => {
 promise = promise.then(() => z1Coords);
 
 // 遍历缩放等级
-utils.makeArray(config.MAX_ZOOM).forEach(idx => {
+utils.makeArray(taskConfig.maxZoom).forEach(idx => {
   const zoom = Math.pow(2, idx + 1);
   const coords2 = [];
 
   utils.prepareZoomDir(z1Location, zoom);
 
   promise = promise.then(coords => {
-    const bunchSize = Math.floor(config.BUNCH_SIZE / 4);
+    const bunchSize = Math.floor(taskConfig.bunchSize / 4);
 
     let stepPromise = Promise.resolve();
 

@@ -1,47 +1,15 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
 const fork = require('child_process').fork;
 
-const config = {
-  MIN_ZOOM: 4,
-  MAX_ZOOM: 2,
-  BUNCH_SIZE: 100,
-};
+const taskConfig = require('./task.config');
 
-function start() {
-  const z1Locations = parseArgv();
-
-  z1Locations.forEach(z1Location => {
-    const args = {
-      config,
-      z1Location,
-    };
-    fork(path.resolve(process.argv[1], '../processor'), [JSON.stringify(args)]);
-  });
+if (!(taskConfig.z1Dir instanceof Array)) {
+  taskConfig.z1Dir = [taskConfig.z1Dir];
 }
 
-function parseArgv() {
-  const locations = [];
-
-  process.argv.slice(2).forEach(el => {
-    let [key, val] = el.split('=');
-    switch (key.toLowerCase()) {
-      case 'max':
-        config.MAX_ZOOM = +val;
-        break;
-      case 'min':
-        config.MIN_ZOOM = +val;
-        break;
-      default:
-        if (val === void 0) {
-          locations.push(key);
-        }
-    }
-  });
-
-  return locations;
-}
-
-start();
+taskConfig.z1Dir.forEach(dir => {
+  console.log(JSON.stringify(dir))
+  //fork(path.resolve(process.argv[1], '../processor'), [JSON.stringify(dir)]);
+});
