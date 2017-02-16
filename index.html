@@ -14,8 +14,8 @@
   <div id="api-src">
     <h5>API源</h5>
     <ul id="api-src-list">
-      <li><a href="javascript:" data-id="GOOGLEAPIS">googleapis.com</a></li>
-      <li><a href="javascript:" data-id="GOOGLECN">google.cn</a></li>
+      <li><a href="javascript:" data-id="GOOGLEAPIS">海外</a></li>
+      <li><a href="javascript:" data-id="GOOGLECN">国内</a></li>
     </ul>
   </div>
   <div id="map_canvas"></div>
@@ -32,7 +32,7 @@
       var API_KEY = 'AIzaSyA_FrfIceV_JYILsYCShrVo50r3HE7yvBw';
       var CALLBACK = 'initialize';
 
-      var apiSrc = localStorage.apiSrc || 'GOOGLEAPIS';
+      var apiSrc = localStorage.apiSrc || 'GOOGLECN';
       var $apiSrcList = document.getElementById('api-src-list');
 
       var $apiScript = document.createElement('script');
