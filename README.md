@@ -2,9 +2,9 @@
 
 **非官方**，嗯……一切确切信息以官方发布的为准，本站点不对内容实时性负责。
 
-地图入口：<https://silentdepth.github.io/KedamaMC-Unofficial-Map/>
+萌新须知：<https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki>
 
-Wiki 入口：<https://github.com/SilentDepth/KedamaMC-Unofficial-Map/wiki>
+地图入口：<https://silentdepth.github.io/KedamaMC-Unofficial-Map/>
 
 ## FAQ
 
