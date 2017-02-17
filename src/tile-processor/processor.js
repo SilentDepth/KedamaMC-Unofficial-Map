@@ -5,32 +5,45 @@ const path = require('path');
 
 const Jimp = require('jimp');
 
-const utils = require('./utils');
 const taskConfig = require('./task.config');
+const utils = require('./utils');
+const sync = require('./sync');
+const {CoordMapping, zoomOut, zoomIn} = require('./zoom');
 
-// const _dirArg = JSON.parse(process.argv[2]);
-const _dirArg = JSON.parse('{"from":"E:/Repo/kedamamc-unofficial-map/test/from","to":"E:/Repo/kedamamc-unofficial-map/test/to - 副本"}');
-let z1Location;
+/*
+ * 处理参数，声明顶级变量
+ */
+
+const _dirArg = [].concat(taskConfig.z1Dir)[process.argv[2] || 0];
+const z1Location = typeof _dirArg === 'string' ? _dirArg : _dirArg.to;
+let isUpdateMode = false;
+let promise;
 let z1Coords;
 let extname;
-let promise;
 
-if (typeof _dirArg === 'object') {
-  z1Location = _dirArg.to;
-  promise = utils.sync(_dirArg.from, _dirArg.to).then(files => {
-    extname = path.extname(files[0]);
-    z1Coords = files.map(file => path.basename(file, extname));
-  }).catch(err => console.log(err));
+/*
+ * 判断是否需要同步目录，生成起始数据
+ *
+ * 只当定义`from`时才进行同步
+ */
+
+if (typeof _dirArg.from === 'string') {
+  promise = sync(_dirArg.from, _dirArg.to);
+  isUpdateMode = true;
 } else {
-  z1Location = _dirArg;
   let filenames = fs.readdirSync(z1Location).filter(filename => utils.RE_FORMAT.test(filename));
+  promise = Promise.resolve(filenames);
+}
+promise = promise.then(filenames => {
   extname = path.extname(filenames[0]);
   z1Coords = filenames.map(filename => path.basename(filename, extname));
-}
+});
 
 console.log(`[PID ${process.pid}] processing ${z1Location}`);
 
-// 缩小
+/*
+ * 缩小
+ */
 
 promise = promise.then(() => z1Coords);
 
@@ -43,18 +56,17 @@ utils.makeArray(taskConfig.minZoom).forEach(idx => {
   promise = promise.then(coords => {
     // 生成坐标映射
 
-    return coords.reduce((a, b) => {
-      const [x, z] = utils.parseCoord(b);
-      const [x2, z2] = [x, z].map(el => Math.floor(el / 2));
-      const k2 = `${x2},${z2}`;
-
-      if (!Reflect.has(a, k2)) {
-        a[k2] = {}
+    return coords.reduce((mappings, coord) => {
+      const mapping = new CoordMapping(utils.parseCoord(coord));
+      const outCoord = mapping.outCoord.join(',');
+      if (!mappings[outCoord]) {
+        mappings[outCoord] = mapping.outMap;
       }
-      a[k2][`${Math.abs(x) % 2},${Math.abs(z) % 2}`] = b;
-      return a;
+      return mappings;
     }, {});
   }).then(map => {
+    // 根据坐标映射缩放图块
+
     const coords2 = Reflect.ownKeys(map);
     const bunchSize = Math.floor(taskConfig.bunchSize / 4);
 
@@ -74,10 +86,11 @@ utils.makeArray(taskConfig.minZoom).forEach(idx => {
               m[pos] = image;
             }).catch(e => {
               console.error(`error occurs while reading ${filepath}. (${e.message || e})`);
+              m[pos] = null;
             });
           })).then(() => {
             return new Promise(resolve => {
-              utils.zoomOut(m).write(path.resolve(z1Location, `../z${zoom}/${coord2}${extname}`), resolve);
+              zoomOut(m).write(path.resolve(z1Location, `../z${zoom}/${coord2}${extname}`), resolve);
             });
           });
         }));
@@ -91,7 +104,9 @@ utils.makeArray(taskConfig.minZoom).forEach(idx => {
   });
 });
 
-// 放大
+/*
+ * 放大
+ */
 
 promise = promise.then(() => z1Coords);
 
@@ -115,7 +130,7 @@ utils.makeArray(taskConfig.maxZoom).forEach(idx => {
           let filepath = path.resolve(z1Location, `../z${zoom / 2}/${coord}${extname}`);
 
           return Jimp.read(filepath).then(image => {
-            let map = utils.zoomIn(image);
+            let map = zoomIn(image);
 
             return Promise.all(Reflect.ownKeys(map).map(pos => {
               return new Promise(resolve => {
@@ -140,6 +155,10 @@ utils.makeArray(taskConfig.maxZoom).forEach(idx => {
     });
   });
 });
+
+/*
+ * 结束
+ */
 
 promise = promise.then(() => {
   console.log(`[${z1Location}] done`);

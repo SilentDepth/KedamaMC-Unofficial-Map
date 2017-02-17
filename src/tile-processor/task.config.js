@@ -5,7 +5,7 @@ module.exports = {
       to: 'E:/Repo/kedamamc-unofficial-map/test/to - 副本/z1',
     },
   ],
-  minZoom: 4,
+  minZoom: 2,
   maxZoom: 2,
   bunchSize: 100,
 };
