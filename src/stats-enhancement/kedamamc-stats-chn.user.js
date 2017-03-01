@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         毛线统计页汉化
+// @name         毛线统计页增强脚本
 // @namespace    silentdepth
 // @version      4
 // @updateURL    https://gist.githubusercontent.com/SilentDepth/a7d0e7986deca5dd9a7b1dbaccd09f78/raw/kedamamc-stats-chn.user.js
@@ -88,6 +88,28 @@ $(function () {
 
   function save() {
     localStorage._usEnh = JSON.stringify(data);
+  }
+
+  function getPlayerNames(needIframe) {
+    return new Promise(resolve => {
+      if (needIframe) {
+        $('<iframe id="_us-iframe" src="https://stats.kedamamc.com/">')
+          .on('load', () => {
+            resolve($('.media', $(this).contents()[0]));
+          })
+          .hide()
+          .appendTo('body');
+      } else {
+        resolve($('.media'));
+      }
+    }).then($medias => {
+      let map = {};
+      $medias.each((idx, el) => {
+        map[$('a', el).attr('href')] = $('h4', el).text();
+      });
+      $('#_us-iframe').remove();
+      return map;
+    });
   }
 
   let locationType = getLocationType();
