@@ -108,10 +108,10 @@ function regMapTypes() {
   mapTypeOverworldJMN.projection = new ProjectionCartesian();
   mapTypeOverworldJMT.projection = new ProjectionCartesian();
 
-  map.mapTypes.set('voxelmap', mapTypeOverworldVM);
+  // map.mapTypes.set('voxelmap', mapTypeOverworldVM);
   map.mapTypes.set('journeymap', mapTypeOverworldJM);
   map.mapTypes.set('journeymap_night', mapTypeOverworldJMN);
-  // map.mapTypes.set('journeymap_topo', mapTypeOverworldJMT);
+  map.mapTypes.set('journeymap_topo', mapTypeOverworldJMT);
 
   map.setMapTypeId('journeymap');
 }
