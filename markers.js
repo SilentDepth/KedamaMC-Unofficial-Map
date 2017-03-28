@@ -65,5 +65,4 @@ var markerData = [
   {title: '永夜镇', x: -3107, z: -744},
   {title: '现充村', x: -4, z: 401},
   {title: '林狼原', x: 900, z: 300},
-  {title: 'Doraemon_sir\'s', x: -650, z: 906},
 ];
