@@ -39,6 +39,18 @@ function initialize() {
     radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4096, 0))
   });
 
+  // Draw inner ring border
+  new google.maps.Circle({
+    map: map,
+    strokeColor: '#FFF',
+    strokeWeight: 1,
+    strokeOpacity: .5,
+    fillOpacity: 0,
+    clickable: false,
+    center: new google.maps.LatLng(0, 0),
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(2048, 0))
+  });
+
   // Draw protected zone
   new google.maps.Rectangle({
     map: map,
