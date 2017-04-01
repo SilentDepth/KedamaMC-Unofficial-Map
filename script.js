@@ -55,11 +55,12 @@ function initialize() {
   new google.maps.Rectangle({
     map: map,
     strokeColor: '#000',
+    strokeWeight: 1,
     strokeOpacity: .5,
     fillColor: '#000',
     fillOpacity: .35,
     clickable: false,
-    bounds: new google.maps.LatLngBounds(calcPostion(2 - 64, 11 - 64), calcPostion(2 + 64, 11 + 64))
+    bounds: new google.maps.LatLngBounds(calcPostion(2 - 64.5, 11 - 64.5), calcPostion(2 + 64.5, 11 + 64.5))
   });
 
   markerData.forEach(function (m) {
@@ -114,6 +115,15 @@ function regMapTypes() {
     maxZoom: Z1 + 2,
     name: '等高线风格'
   });
+  var mapTypeV1OverworldJM = new google.maps.ImageMapType({
+    getTileUrl: function (coord, zoom) {
+      return 'tiles/v1/day/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+    },
+    tileSize: new google.maps.Size(512, 512), // size of image.  their native size to display 1 to 1
+    minZoom: Z1 - 4,
+    maxZoom: Z1 + 2,
+    name: '一周目'
+  });
 
   mapTypeOverworldVM.projection = new ProjectionCartesian();
   mapTypeOverworldJM.projection = new ProjectionCartesian();
@@ -124,6 +134,7 @@ function regMapTypes() {
   map.mapTypes.set('journeymap', mapTypeOverworldJM);
   map.mapTypes.set('journeymap_night', mapTypeOverworldJMN);
   map.mapTypes.set('journeymap_topo', mapTypeOverworldJMT);
+  map.mapTypes.set('v1_day', mapTypeV1OverworldJM);
 
   map.setMapTypeId('journeymap');
 }
