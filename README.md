@@ -1,1 +1,1 @@
-See [https://github.com/SilentDepth/KedamaMC-Unofficial-Map]()
+See https://bbs.craft.moe/d/10
