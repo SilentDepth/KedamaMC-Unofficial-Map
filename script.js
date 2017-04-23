@@ -232,6 +232,11 @@ function addMarker(m) {
     icon: ICONS[m.type || 'default'],
     title: m.title + "\n(" + m.x + ", " + (m.y !== void 0 ? m.y + ', ' : '') + m.z + ")"
   });
+  marker.addListener('click', function () {
+    var contents = this.getTitle().split('\n');
+    infoWindow.setContent('<strong>' + contents[0] + '</strong><br><span>' + contents[1] + '</span>');
+    infoWindow.open(map, this);
+  });
   markers.push(marker);
 }
 
@@ -254,6 +259,7 @@ function bindEvents() {
   });
 
   map.addListener('click', function (ev) {
+    console.log(ev);
     var x = Math.round(ev.latLng.lng() * FACTOR);
     var z = Math.round(ev.latLng.lat() * FACTOR);
     infoWindow.setContent('(' + x + ',' + z + ')');
