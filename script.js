@@ -6,12 +6,15 @@ var FACTOR = SCALE * (1 << Z1);
 var ICONS = {};
 
 var $coordInput = document.querySelector('#coord');
+var infoWindow;
 var map = null;
 var markers = [];
 var markerVisibility = true;
 
 var bordersV1 = [];
 var bordersV2 = [];
+
+var dblclickTimeout;
 
 function initialize() {
   map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -26,6 +29,7 @@ function initialize() {
       mapTypeIds: ['journeymap', 'journeymap_night', 'journeymap_topo', 'v1_day', 'v1_night', 'v1_topo']
     }
   });
+  infoWindow = new google.maps.InfoWindow();
 
   regMapTypes();
 
@@ -247,6 +251,22 @@ function bindEvents() {
     var x = Math.round(ev.latLng.lng() * FACTOR);
     var z = Math.round(ev.latLng.lat() * FACTOR);
     $coordInput.value = x + ' , ' + z;
+  });
+
+  map.addListener('click', function (ev) {
+    var x = Math.round(ev.latLng.lng() * FACTOR);
+    var z = Math.round(ev.latLng.lat() * FACTOR);
+    infoWindow.setContent('(' + x + ',' + z + ')');
+    infoWindow.setPosition(ev.latLng);
+    dblclickTimeout = setTimeout(function () {
+      infoWindow.open(map);
+    }, 200);
+  });
+
+  map.addListener('dblclick', function () {
+    if (dblclickTimeout) {
+      clearTimeout(dblclickTimeout);
+    }
   });
 
   map.addListener('maptypeid_changed', function () {
