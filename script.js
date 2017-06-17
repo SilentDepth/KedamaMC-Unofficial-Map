@@ -44,7 +44,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4096, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4800, 0))
   }));
 
   // Draw inner ring border
