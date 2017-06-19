@@ -44,7 +44,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4800, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(4800, 0))
   }));
 
   // Draw inner ring border
@@ -56,7 +56,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(2048, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(2048, 0))
   }));
 
   // Draw protected zone
@@ -68,7 +68,7 @@ function initialize() {
     fillColor: '#000',
     fillOpacity: .35,
     clickable: false,
-    bounds: new google.maps.LatLngBounds(calcPostion(2 - 64.5, 11 - 64.5), calcPostion(2 + 64.5, 11 + 64.5))
+    bounds: new google.maps.LatLngBounds(calcPosition(2 - 64.5, 11 - 64.5), calcPosition(2 + 64.5, 11 + 64.5))
   }));
 
   bordersV1.push(new google.maps.Circle({
@@ -80,7 +80,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(2048, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(2048, 0))
   }));
 
   bordersV1.push(new google.maps.Circle({
@@ -92,7 +92,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4096, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(4096, 0))
   }));
 
   bordersV1.push(new google.maps.Circle({
@@ -104,7 +104,7 @@ function initialize() {
     fillOpacity: 0,
     clickable: false,
     center: new google.maps.LatLng(0, 0),
-    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPostion(4800, 0))
+    radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(4800, 0))
   }));
 
   markerData.forEach(function (m) {
@@ -112,6 +112,8 @@ function initialize() {
   });
 
   bindEvents();
+
+  if (/\bvisitor=ankou\b/.test(location.search)) addMarathon();
 }
 
 function ProjectionCartesian() {}
@@ -227,7 +229,7 @@ function regIcons() {
 
 function addMarker(m) {
   var marker = new google.maps.Marker({
-    position: calcPostion(m.x, m.z),
+    position: calcPosition(m.x, m.z),
     map: map,
     icon: ICONS[m.type || 'default'],
     title: m.title + "\n(" + m.x + ", " + (m.y !== void 0 ? m.y + ', ' : '') + m.z + ")"
@@ -296,6 +298,61 @@ function bindEvents() {
   });
 }
 
-function calcPostion(x, z) {
+function calcPosition(x, z) {
   return new google.maps.LatLng((z + .5) / FACTOR, (x + .5) / FACTOR);
+}
+
+function addMarathon() {
+  var marathon = new google.maps.Polyline({
+    path: [
+      calcPosition(-300, -600),
+      calcPosition(50, -1500),
+      calcPosition(-1500, -2250),
+      calcPosition(-2600, -1900),
+      calcPosition(-2800, 0),
+      calcPosition(-2550, 2100),
+      calcPosition(-1800, 2222),
+      calcPosition(1800, 2222),
+      calcPosition(2500, 2100),
+      calcPosition(2468, -80),
+      calcPosition(2100, -2600),
+      calcPosition(900, -1700),
+      calcPosition(567, -1300),
+      calcPosition(-300, -600),
+    ],
+    icons: [
+      {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 6,
+          fillColor: '#FFF',
+          fillOpacity: 1,
+          strokeColor: '#F96',
+          strokeWeight: 2
+        },
+        offset: 0
+      },
+      {
+        icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW},
+        offset: '5%',
+        repeat: '10%'
+      }
+    ],
+    strokeColor: '#F96',
+    strokeWidth: 2,
+    clickable: false,
+    visible: false
+  });
+  marathon.setMap(map);
+  var count = 0;
+  var int = setInterval(function () {
+    count = (count + 1) % 800;
+    var icons = marathon.get('icons');
+    icons[1].offset = (count / 8) + '%';
+    marathon.set('icons', icons);
+  }, 25);
+
+  map.addListener('maptypeid_changed', function () {
+    marathon.setVisible(map.mapTypeId.startsWith('v1'));
+  });
 }
