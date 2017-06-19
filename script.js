@@ -303,23 +303,23 @@ function calcPosition(x, z) {
 }
 
 function addMarathon() {
+  var checkpoints = [
+    calcPosition(-300, -600),
+    calcPosition(50, -1500),
+    calcPosition(-1500, -2250),
+    calcPosition(-2600, -1900),
+    calcPosition(-2800, 0),
+    calcPosition(-2550, 2100),
+    calcPosition(-1800, 2222),
+    calcPosition(1800, 2222),
+    calcPosition(2500, 2100),
+    calcPosition(2468, -80),
+    calcPosition(2100, -2600),
+    calcPosition(900, -1700),
+    calcPosition(567, -1300)
+  ];
   var marathon = new google.maps.Polyline({
-    path: [
-      calcPosition(-300, -600),
-      calcPosition(50, -1500),
-      calcPosition(-1500, -2250),
-      calcPosition(-2600, -1900),
-      calcPosition(-2800, 0),
-      calcPosition(-2550, 2100),
-      calcPosition(-1800, 2222),
-      calcPosition(1800, 2222),
-      calcPosition(2500, 2100),
-      calcPosition(2468, -80),
-      calcPosition(2100, -2600),
-      calcPosition(900, -1700),
-      calcPosition(567, -1300),
-      calcPosition(-300, -600),
-    ],
+    path: checkpoints.concat(checkpoints[0]),
     icons: [
       {
         icon: {
@@ -352,7 +352,21 @@ function addMarathon() {
     marathon.set('icons', icons);
   }, 25);
 
+  var markers = checkpoints.slice(1).map(function (point) {
+    return new google.maps.Marker({
+      position: point,
+      map: map,
+      icon: ICONS.default,
+      clickable: false,
+      visible: false
+    });
+  });
+
   map.addListener('maptypeid_changed', function () {
-    marathon.setVisible(map.mapTypeId.startsWith('v1'));
+    var display = map.mapTypeId.startsWith('v1');
+    marathon.setVisible(display);
+    markers.forEach(function (m) {
+      m.setVisible(display);
+    });
   });
 }
