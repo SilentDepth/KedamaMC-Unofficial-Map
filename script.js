@@ -1,7 +1,7 @@
 'use strict';
 
 var Z1 = 5;
-var SCALE = 10;
+var SCALE = 100;
 var FACTOR = SCALE * (1 << Z1);
 var ICONS = {};
 
@@ -310,8 +310,8 @@ function addMarathon() {
     calcPosition(-2600, -1900),
     calcPosition(-2800, 0),
     calcPosition(-2550, 2100),
-    calcPosition(-1800, 2222),
-    calcPosition(1800, 2222),
+    calcPosition(-1300, 2400),
+    calcPosition(1300, 2400),
     calcPosition(2500, 2100),
     calcPosition(2468, -80),
     calcPosition(2100, -2600),
