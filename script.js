@@ -59,18 +59,6 @@ function initialize() {
     radius: google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(0, 0), calcPosition(2048, 0))
   }));
 
-  // Draw protected zone
-  bordersV2.push(new google.maps.Rectangle({
-    map: map,
-    strokeColor: '#000',
-    strokeWeight: 1,
-    strokeOpacity: .5,
-    fillColor: '#000',
-    fillOpacity: .35,
-    clickable: false,
-    bounds: new google.maps.LatLngBounds(calcPosition(2 - 64.5, 11 - 64.5), calcPosition(2 + 64.5, 11 + 64.5))
-  }));
-
   bordersV1.push(new google.maps.Circle({
     map: map,
     visible: false,
