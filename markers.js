@@ -62,7 +62,7 @@ var markerData = [
   {title: 'Doraemon_sir\'s', x: -629, z: 909},
   {title: '棉花庄', x: -630, z: 801},
   {title: 'Ghastty\'s 大麦场', x: -849, z: 711},
-  {title: '永夜镇', x: -3140, z: -743},
+  {title: '见泷原', x: -3140, z: -743},
   {title: '现充村', x: -4, z: 401},
   {title: '林狼原', x: 900, z: 300},
   {title: '雪峰乡', x: -18, y: 114, z: 1061},
