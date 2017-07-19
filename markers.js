@@ -84,4 +84,5 @@ var markerData = [
   {title: '八卦岛', x: -2008, z: 2285},
   {title: 'Derp城', x: -600, z: 1269},
   {title: '红石渣', x: 246, z: 632},
+  {title: '西国隘口', x: -860, z: 0},
 ];
