@@ -85,4 +85,5 @@ var markerData = [
   {title: 'Derp城', x: -600, z: 1269},
   {title: '红石渣', x: 246, z: 632},
   {title: '西国隘口', x: -860, z: 0},
+  {title: '毛线第一图书馆', x: 2244, z: -1676},
 ];
