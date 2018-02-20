@@ -100,8 +100,6 @@ function initialize() {
   });
 
   bindEvents();
-
-  if (/\bvisitor=ankou\b/.test(location.search)) addMarathon();
 }
 
 function ProjectionCartesian() {}
@@ -288,73 +286,4 @@ function bindEvents() {
 
 function calcPosition(x, z) {
   return new google.maps.LatLng((z + .5) / FACTOR, (x + .5) / FACTOR);
-}
-
-function addMarathon() {
-  var checkpoints = [
-    calcPosition(-300, -600),
-    calcPosition(50, -1500),
-    calcPosition(-1500, -2250),
-    calcPosition(-2600, -1900),
-    calcPosition(-2800, 0),
-    calcPosition(-2550, 2100),
-    calcPosition(-1300, 2400),
-    calcPosition(1300, 2400),
-    calcPosition(2500, 2100),
-    calcPosition(2468, -80),
-    calcPosition(2100, -2600),
-    calcPosition(900, -1700),
-    calcPosition(567, -1300)
-  ];
-  var marathon = new google.maps.Polyline({
-    path: checkpoints.concat(checkpoints[0]),
-    icons: [
-      {
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 6,
-          fillColor: '#FFF',
-          fillOpacity: 1,
-          strokeColor: '#F96',
-          strokeWeight: 2
-        },
-        offset: 0
-      },
-      {
-        icon: {path: google.maps.SymbolPath.FORWARD_OPEN_ARROW},
-        offset: '5%',
-        repeat: '10%'
-      }
-    ],
-    strokeColor: '#F96',
-    strokeWidth: 2,
-    clickable: false,
-    visible: false
-  });
-  marathon.setMap(map);
-  var count = 0;
-  var int = setInterval(function () {
-    count = (count + 1) % 800;
-    var icons = marathon.get('icons');
-    icons[1].offset = (count / 8) + '%';
-    marathon.set('icons', icons);
-  }, 25);
-
-  var markers = checkpoints.slice(1).map(function (point) {
-    return new google.maps.Marker({
-      position: point,
-      map: map,
-      icon: ICONS.default,
-      clickable: false,
-      visible: false
-    });
-  });
-
-  map.addListener('maptypeid_changed', function () {
-    var display = map.mapTypeId.startsWith('v1');
-    marathon.setVisible(display);
-    markers.forEach(function (m) {
-      m.setVisible(display);
-    });
-  });
 }
