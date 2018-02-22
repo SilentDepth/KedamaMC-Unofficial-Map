@@ -22,8 +22,8 @@
 <script>
   !function apiSrcMenu() {
     var API_SRC_MAP = {
-      GOOGLEAPIS: 'https://maps.googleapis.com/maps/api/js?v=3',
-      GOOGLECN: 'https://maps.google.cn/maps/api/js?v=3'
+      GOOGLEAPIS: 'https://maps.googleapis.com/maps/api/js?',
+      GOOGLECN: 'https://maps.google.cn/maps/api/js?'
     };
     var API_KEY = 'AIzaSyA_FrfIceV_JYILsYCShrVo50r3HE7yvBw';
     var CALLBACK = 'initialize';
@@ -32,7 +32,7 @@
     var $apiSrcList = document.getElementById('api-src-list');
 
     var $apiScript = document.createElement('script');
-    $apiScript.src = API_SRC_MAP[apiSrc] + '&key=' + API_KEY + '&libraries=geometry&callback=' + CALLBACK;
+    $apiScript.src = API_SRC_MAP[apiSrc] + '&v=3.31&key=' + API_KEY + '&libraries=geometry&callback=' + CALLBACK;
     document.body.insertBefore($apiScript, null);
 
     var $currApiSrc = $apiSrcList.querySelector('[data-id=' + apiSrc + ']');
