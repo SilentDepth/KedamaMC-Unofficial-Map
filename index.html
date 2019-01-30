@@ -2,13 +2,13 @@
 <meta charset="utf-8">
 <title>KedamaMC Unofficial Map</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://unpkg.com/es5-shim/es5-shim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es5-shim@4.5.12/es5-shim.min.js"></script>
 
 <div class="header">
   <h4>毛玉線圈物語主世界非官方地图<br><em>点击右键显示/隐藏标注</em></h4>
 </div>
 <div id="api-src">
-  <h5>API源</h5>
+  <h5>API 源</h5>
   <ul id="api-src-list">
     <li><a href="javascript:" data-id="GOOGLEAPIS">海外</a></li>
     <li><a href="javascript:" data-id="GOOGLECN">国内</a></li>
@@ -32,7 +32,7 @@
     var $apiSrcList = document.getElementById('api-src-list');
 
     var $apiScript = document.createElement('script');
-    $apiScript.src = API_SRC_MAP[apiSrc] + '&v=3.31&key=' + API_KEY + '&libraries=geometry&callback=' + CALLBACK;
+    $apiScript.src = API_SRC_MAP[apiSrc] + '&v=quarterly&key=' + API_KEY + '&libraries=geometry&callback=' + CALLBACK;
     document.body.insertBefore($apiScript, null);
 
     var $currApiSrc = $apiSrcList.querySelector('[data-id=' + apiSrc + ']');

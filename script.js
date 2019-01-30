@@ -20,11 +20,10 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map_canvas'), {
     center: new google.maps.LatLng(0, 0),
     zoom: Z1,
-    streetViewControl: false,
-    zoomControl: true,
-    panControl: false,
-    scaleControl: false,
     backgroundColor: '#000',
+    disableDefaultUI: true,
+    zoomControl: true,
+    mapTypeControl: true,
     mapTypeControlOptions: {
       mapTypeIds: ['journeymap', 'journeymap_night', 'journeymap_topo', 'v1_day', 'v1_night', 'v1_topo']
     }
