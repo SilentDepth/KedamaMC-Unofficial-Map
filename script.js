@@ -1,7 +1,7 @@
 'use strict';
 
 var Z1 = 5;
-var SCALE = 100;
+var SCALE = 512;
 var FACTOR = SCALE * (1 << Z1);
 var ICONS = {};
 
@@ -104,10 +104,10 @@ function initialize() {
 
 function ProjectionCartesian() {}
 ProjectionCartesian.prototype.fromLatLngToPoint = function (latLng) {
-  return new google.maps.Point(latLng.lng() * SCALE, latLng.lat() * SCALE);
+  return new google.maps.Point(latLng.lng() * SCALE + SCALE / 2, latLng.lat() * SCALE + SCALE / 2);
 };
 ProjectionCartesian.prototype.fromPointToLatLng = function (point, noWrap) {
-  return new google.maps.LatLng(point.y / SCALE, point.x / SCALE, noWrap);
+  return new google.maps.LatLng((point.y - SCALE / 2) / SCALE, (point.x - SCALE / 2) / SCALE, noWrap);
 };
 
 function regMapTypes() {
@@ -122,7 +122,9 @@ function regMapTypes() {
   // });
   var mapTypeOverworldJM = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/journeymap/images/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/journeymap/images/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
@@ -131,7 +133,9 @@ function regMapTypes() {
   });
   var mapTypeOverworldJMN = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/journeymap_night/images/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/journeymap_night/images/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
@@ -140,7 +144,9 @@ function regMapTypes() {
   });
   var mapTypeOverworldJMT = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/journeymap_topo/images/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/journeymap_topo/images/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
@@ -149,7 +155,9 @@ function regMapTypes() {
   });
   var mapTypeV1OverworldJM = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/v1/day/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/v1/day/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
@@ -158,7 +166,9 @@ function regMapTypes() {
   });
   var mapTypeV1OverworldJMN = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/v1/night/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/v1/night/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
@@ -167,7 +177,9 @@ function regMapTypes() {
   });
   var mapTypeV1OverworldJMT = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
-      return 'tiles/v1/topo/z' + Math.pow(2, zoom - Z1) + '/' + coord.x + ',' + coord.y + '.png';
+      var x = zoom === 0 ? 0 : coord.x - (1 << zoom - 1)
+      var y = zoom === 0 ? 0 : coord.y - (1 << zoom - 1)
+      return 'tiles/v1/topo/z' + Math.pow(2, zoom - Z1) + '/' + x + ',' + y + '.png';
     },
     tileSize: new google.maps.Size(512, 512),
     minZoom: Z1 - 4,
